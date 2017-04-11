@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for node-npmtest-keystone/keystone/lib/list.js</title>
+    <meta charset="utf-8">
+    <style>
+        body, html {
+            margin:0; padding: 0;
+        }
+        body {
+            font-family: Arial, Helvetica;
+            font-size: 10pt;
+        }
+        div.header, div.footer {
+            background: #eee;
+            padding: 1em;
+        }
+        div.header {
+            height: 160px;
+            padding: 0 1em 0 1em;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            border-bottom: 1px solid #666;
+            width: 100%;
+        }
+        div.footer {
+            border-top: 1px solid #666;
+        }
+        div.body {
+            margin-top: 170px;
+        }
+        div.meta {
+            font-size: 90%;
+            text-align: center;
+        }
+        h1, h2, h3 {
+            font-weight: normal;
+        }
+        h1 {
+            font-size: 12pt;
+        }
+        h2 {
+            font-size: 10pt;
+        }
+        pre {
+            font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+            margin: 0;
+            padding: 0;
+            font-size: 14px;
+            tab-size: 2;
+        }
+
+        div.path { font-size: 110%; }
+        div.path a:link, div.path a:visited { color: #000; }
+        table.coverage { border-collapse: collapse; margin:0; padding: 0 }
+
+        table.coverage td {
+            margin: 0;
+            padding: 0;
+            color: #111;
+            vertical-align: top;
+        }
+        table.coverage td.line-count {
+            width: 50px;
+            text-align: right;
+            padding-right: 5px;
+        }
+        table.coverage td.line-coverage {
+            color: #777 !important;
+            text-align: right;
+            border-left: 1px solid #666;
+            border-right: 1px solid #666;
+        }
+
+        table.coverage td.text {
+        }
+
+        table.coverage td span.cline-any {
+            display: inline-block;
+            padding: 0 5px;
+            width: 40px;
+        }
+        table.coverage td span.cline-neutral {
+            background: #eee;
+        }
+        table.coverage td span.cline-yes {
+            background: #b5d592;
+            color: #999;
+        }
+        table.coverage td span.cline-no {
+            background: #fc8c84;
+        }
+
+        .cstat-yes { color: #111; }
+        .cstat-no { background: #fc8c84; color: #111; }
+        .fstat-no { background: #ffc520; color: #111 !important; }
+        .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
+        .missing-if-branch {
+            display: inline-block;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: black;
+            color: yellow;
+        }
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
+            color: inherit !important;
+        }
+
+        .entity, .metric { font-weight: bold; }
+        .metric { display: inline-block; border: 1px solid #333; padding: 0.3em; background: white; }
+        .metric small { font-size: 80%; font-weight: normal; color: #666; }
+
+        div.coverage-summary table { border-collapse: collapse; margin: 3em; font-size: 110%; }
+        div.coverage-summary td, div.coverage-summary table  th { margin: 0; padding: 0.25em 1em; border-top: 1px solid #666; border-bottom: 1px solid #666; }
+        div.coverage-summary th { text-align: left; border: 1px solid #666; background: #eee; font-weight: normal; }
+        div.coverage-summary th.file { border-right: none !important; }
+        div.coverage-summary th.pic { border-left: none !important; text-align: right; }
+        div.coverage-summary th.pct { border-right: none !important; }
+        div.coverage-summary th.abs { border-left: none !important; text-align: right; }
+        div.coverage-summary td.pct { text-align: right; border-left: 1px solid #666; }
+        div.coverage-summary td.abs { text-align: right; font-size: 90%; color: #444; border-right: 1px solid #666; }
+        div.coverage-summary td.file { text-align: right; border-left: 1px solid #666; white-space: nowrap;  }
+        div.coverage-summary td.pic { min-width: 120px !important;  }
+        div.coverage-summary a:link { color: #000; }
+        div.coverage-summary a:visited { color: #333; }
+        div.coverage-summary tfoot td { border-top: 1px solid #666; }
+
+        div.coverage-summary .yui3-datatable-sort-indicator, div.coverage-summary .dummy-sort-indicator {
+            height: 10px;
+            width: 7px;
+            display: inline-block;
+            margin-left: 0.5em;
+        }
+        div.coverage-summary .yui3-datatable-sort-indicator {
+            background: no-repeat scroll 0 0 transparent;
+        }
+        div.coverage-summary .yui3-datatable-sorted .yui3-datatable-sort-indicator {
+            background-position: 0 -20px;
+        }
+        div.coverage-summary .yui3-datatable-sorted-desc .yui3-datatable-sort-indicator {
+            background-position: 0 -10px;
+        }
+
+        .high { background: #b5d592 !important; }
+        .medium { background: #ffe87c !important; }
+        .low { background: #fc8c84 !important; }
+
+        span.cover-fill, span.cover-empty {
+            display:inline-block;
+            border:1px solid #444;
+            background: white;
+            height: 12px;
+        }
+        span.cover-fill {
+            background: #ccc;
+            border-right: 1px solid #444;
+        }
+        span.cover-empty {
+            background: white;
+            border-left: none;
+        }
+        span.cover-full {
+            border-right: none !important;
+        }
+        pre.prettyprint {
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1 style="font-weight: bold;">
+        <a href="https://github.com/npmtest/node-npmtest-keystone">npmtest-keystone (v0.0.1)</a>
+    </h1>
+    <h1>Code coverage report for <span class="entity">node-npmtest-keystone/keystone/lib/list.js</span></h1>
+    <h2>
+        
+        Statements: <span class="metric">34.69% <small>(34 / 98)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Branches: <span class="metric">0% <small>(0 / 48)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Functions: <span class="metric">0% <small>(0 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        
+        Lines: <span class="metric">35.79% <small>(34 / 95)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">node-npmtest-keystone/keystone/lib/</a> &#187; list.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var _ = require('underscore');
+var keystone = require('../');
+var schemaPlugins = require('./schemaPlugins');
+var utils = require('keystone-utils');
+&nbsp;
+/**
+ * List Class
+ *
+ * @param {String} key
+ * @param {Object} options
+ */
+&nbsp;
+<span class="fstat-no" title="function not covered" >function List(key, options) {</span>
+<span class="cstat-no" title="statement not covered" >	if (!(this instanceof List)) <span class="cstat-no" title="statement not covered" >return new List(key, options);</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	var defaultOptions = {</span>
+		schema: {
+			collection: keystone.prefixModel(key)
+		},
+		noedit: false,
+		nocreate: false,
+		nodelete: false,
+		autocreate: false,
+		sortable: false,
+		hidden: false,
+		track: false,
+		inherits: false,
+		searchFields: '__name__',
+		defaultSort: '__default__',
+		defaultColumns: '__name__'
+	};
+&nbsp;
+	// initialFields values are initialised on demand by the getter
+<span class="cstat-no" title="statement not covered" >	var initialFields;</span>
+&nbsp;
+	// Inherit default options from parent list if it exists
+<span class="cstat-no" title="statement not covered" >	if (options &amp;&amp; options.inherits) {</span>
+<span class="cstat-no" title="statement not covered" >		if (options.inherits.options &amp;&amp; options.inherits.options.inherits) {</span>
+<span class="cstat-no" title="statement not covered" >			throw new Error('Inherited Lists may not contain any inheritance');</span>
+		}
+<span class="cstat-no" title="statement not covered" >		defaultOptions = utils.options(defaultOptions, options.inherits.options);</span>
+	}
+&nbsp;
+<span class="cstat-no" title="statement not covered" >	this.options = utils.options(defaultOptions, options);</span>
+&nbsp;
+	// init properties
+<span class="cstat-no" title="statement not covered" >	this.key = key;</span>
+<span class="cstat-no" title="statement not covered" >	this.path = this.get('path') || utils.keyToPath(key, true);</span>
+<span class="cstat-no" title="statement not covered" >	this.schema = new keystone.mongoose.Schema({}, this.options.schema);</span>
+<span class="cstat-no" title="statement not covered" >	this.schemaFields = [];</span>
+<span class="cstat-no" title="statement not covered" >	this.uiElements = [];</span>
+<span class="cstat-no" title="statement not covered" >	this.underscoreMethods = {};</span>
+<span class="cstat-no" title="statement not covered" >	this.fields = {};</span>
+<span class="cstat-no" title="statement not covered" >	this.fieldTypes = {};</span>
+<span class="cstat-no" title="statement not covered" >	this.relationships = {};</span>
+<span class="cstat-no" title="statement not covered" >	this.mappings = {</span>
+		name: null,
+		createdBy: null,
+		createdOn: null,
+		modifiedBy: null,
+		modifiedOn: null
+	};
+&nbsp;
+	// init mappings
+<span class="cstat-no" title="statement not covered" >	_.each(this.options.map, <span class="fstat-no" title="function not covered" >function(val, key) {</span> <span class="cstat-no" title="statement not covered" >this.map(key, val); </span>}, this);</span>
+&nbsp;
+	// define property getters
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'label', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.get('label') || this.set('label', utils.plural(utils.keyToLabel(key)));</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'singular', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.get('singular') || this.set('singular', utils.singular(this.label));</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'plural', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.get('plural') || this.set('plural', utils.plural(this.singular));</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'namePath', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.mappings.name || '_id';</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'nameField', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.fields[this.mappings.name];</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'nameIsVirtual', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return this.model.schema.virtuals[this.mappings.name] ? true : false;</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'nameIsEditable', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return (this.fields[this.mappings.name] &amp;&amp; this.fields[this.mappings.name].type === 'text') ? !this.fields[this.mappings.name].noedit : false;</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'nameIsInitial', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return (this.fields[this.mappings.name] &amp;&amp; this.fields[this.mappings.name].options.initial === undefined);</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	Object.defineProperty(this, 'initialFields', { get: <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >		return initialFields || (initialFields = _.filter(this.fields, <span class="fstat-no" title="function not covered" >function(i) {</span> <span class="cstat-no" title="statement not covered" >return i.initial; </span>}));</span>
+	} });
+<span class="cstat-no" title="statement not covered" >	if (this.get('sortable')) {</span>
+<span class="cstat-no" title="statement not covered" >		schemaPlugins.sortable.apply(this);</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if (this.get('autokey')) {</span>
+<span class="cstat-no" title="statement not covered" >		schemaPlugins.autokey.apply(this);</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if (this.get('track')) {</span>
+<span class="cstat-no" title="statement not covered" >		schemaPlugins.track.apply(this);</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if (this.get('history')) {</span>
+<span class="cstat-no" title="statement not covered" >		schemaPlugins.history.apply(this);</span>
+	}
+<span class="cstat-no" title="statement not covered" >	if (this.get('inherits')) {</span>
+<span class="cstat-no" title="statement not covered" >		var parentFields = this.get('inherits').schemaFields;</span>
+<span class="cstat-no" title="statement not covered" >		this.add.apply(this, parentFields);</span>
+	}
+}
+&nbsp;
+// Search Fields
+Object.defineProperty(List.prototype, 'searchFields', {
+	get: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >		if (!this._searchFields) {</span>
+<span class="cstat-no" title="statement not covered" >			this._searchFields = this.expandPaths(this.get('searchFields'));</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return this._searchFields;</span>
+	}, set: <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >		this.set('searchFields', value);</span>
+<span class="cstat-no" title="statement not covered" >		delete this._searchFields;</span>
+	}
+});
+&nbsp;
+// Default Sort Field
+Object.defineProperty(List.prototype, 'defaultSort', {
+	get: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >		var ds = this.get('defaultSort');</span>
+<span class="cstat-no" title="statement not covered" >		return (ds === '__default__') ? (this.get('sortable') ? 'sortOrder' : this.namePath) : ds;</span>
+	}, set: <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >		this.set('defaultSort', value);</span>
+	}
+});
+&nbsp;
+// Default Column Fields
+Object.defineProperty(List.prototype, 'defaultColumns', {
+	get: <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >		if (!this._defaultColumns) {</span>
+<span class="cstat-no" title="statement not covered" >			this._defaultColumns = this.expandColumns(this.get('defaultColumns'));</span>
+		}
+<span class="cstat-no" title="statement not covered" >		return this._defaultColumns;</span>
+	}, set: <span class="fstat-no" title="function not covered" >function(value) {</span>
+<span class="cstat-no" title="statement not covered" >		this.set('defaultColumns', value);</span>
+<span class="cstat-no" title="statement not covered" >		delete this._defaultColumns;</span>
+	}
+});
+&nbsp;
+// Add prototype methods
+List.prototype.set = require('./list/set');
+List.prototype.get = List.prototype.set;
+List.prototype.add = require('./list/add');
+List.prototype.map = require('./list/map');
+List.prototype.automap = require('./list/automap');
+List.prototype.field = require('./list/field');
+List.prototype.relationship = require('./list/relationship');
+List.prototype.underscoreMethod = require('./list/underscoreMethod');
+List.prototype.register = require('./list/register');
+List.prototype.getData = require('./list/getData');
+List.prototype.getOptions = require('./list/getOptions');
+List.prototype.getAdminURL = require('./list/getAdminURL');
+List.prototype.getDocumentName = require('./list/getDocumentName');
+List.prototype.addSearchToQuery = require('./list/addSearchToQuery');
+List.prototype.addFiltersToQuery = require('./list/addFiltersToQuery');
+List.prototype.isReserved = require('./list/isReserved');
+List.prototype.expandColumns = require('./list/expandColumns');
+List.prototype.expandPaths = require('./list/expandPaths');
+List.prototype.selectColumns = require('./list/selectColumns');
+List.prototype.processFilters = require('./list/processFilters');
+List.prototype.getSearchFilters = require('./list/getSearchFilters');
+List.prototype.updateAll = require('./list/updateAll');
+List.prototype.getUniqueValue = require('./list/getUniqueValue');
+List.prototype.getPages = require('./list/getPages');
+List.prototype.paginate = require('./list/paginate');
+&nbsp;
+/*!
+ * Export class
+ */
+exports = module.exports = List;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a> at Tue Apr 11 2017 17:55:49 GMT+0000 (UTC)</div>
+</div>
+</body>
+</html>
