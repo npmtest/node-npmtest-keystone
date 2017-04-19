@@ -538,7 +538,7 @@
 <tspan x="10" y="8570">  │   └── is@3.2.1 </tspan>
 <tspan x="10" y="8586">  ├─┬ letsencrypt-express@2.0.6 </tspan>
 <tspan x="10" y="8602">  │ ├── le-challenge-fs@2.0.8 </tspan>
-<tspan x="10" y="8618">  │ ├─┬ le-sni-auto@2.1.0 </tspan>
+<tspan x="10" y="8618">  │ ├─┬ le-sni-auto@2.1.1 </tspan>
 <tspan x="10" y="8634">  │ │ └── bluebird@3.5.0 </tspan>
 <tspan x="10" y="8650">  │ ├─┬ le-store-certbot@2.0.5 </tspan>
 <tspan x="10" y="8666">  │ │ ├── pyconf@1.1.2 </tspan>
